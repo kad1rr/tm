@@ -37,26 +37,31 @@ fn main() {
             .output()
     };
 
-    let start_time = Instant::now();
+    let command_start_time = Instant::now();
+    let tm_start_time = Instant::now();
+
 
     match output {
         Ok(output) => {
             if output.status.success() {
                 println!(
-                    "\x1b[1;32mSuccessfully completed!\x1b[0m\nOutput:\n{}",
+                    "\x1b[1;32mSuccessfully completed!\x1b[0m\n{}",
                     String::from_utf8_lossy(&output.stdout)
                 );
             } else {
                 eprintln!(
-                    "\x1b[1;31mError occurred!\x1b[0m\nOutput:\n{}",
+                    "\x1b[1;31mError occurred!\x1b[0m\n{}",
                     String::from_utf8_lossy(&output.stderr)
                 );
             }
 
-            println!("Elapsed Time: {:?}", start_time.elapsed());
+            println!("Command Elapsed Time: {:?}", command_start_time.elapsed());
         }
         Err(e) => {
             eprintln!("\x1b[1;31mError: {}\x1b[0m", e);
         }
     }
+
+    println!("TM Elapsed Time: {:?}", tm_start_time.elapsed());
+
 }
